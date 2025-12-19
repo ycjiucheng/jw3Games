@@ -22,22 +22,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'pnpm'
+          cache: 'npm'
 
-      - name: Install dependencies with pnpm
-        run: pnpm install
+      - name: Install core dependencies only
+        run: |
+          # 只安装必需的依赖，完全跳过rollup的可选依赖
+          npm install --no-optional --legacy-peer-deps --no-audit --no-fund \
+            react@^18.3.1 \
+            react-dom@^18.3.1 \
+            react-router-dom@^7.3.0 \
+            zustand@^5.0.3 \
+            vite@^5.4.10 \
+            @vitejs/plugin-react@^4.4.1 \
+            typescript@^5.5.2
 
-      - name: Build
-        run: pnpm run build
+      - name: Build with direct Vite command
+        run: npx vite build
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

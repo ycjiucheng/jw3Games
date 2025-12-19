@@ -170,6 +170,7 @@ export const useGameStore = create<GameState>()(
         
         // 更新最大值
         if (newStats.health > newStats.maxHealth) newStats.health = newStats.maxHealth;
+        if (newStats.energy > newStats.maxEnergy) newStats.energy = newStats.maxEnergy;
         
         // 死亡判定
         if (newStats.health <= 0) {

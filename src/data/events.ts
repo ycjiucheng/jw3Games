@@ -11,12 +11,14 @@ export const events: Record<string, GameEvent> = {
         id: 'c1',
         text: '前往大侠墓祭拜',
         nextEventId: 'tomb_visit',
+        effects: { timePass: 0 },
         log: '你决定先去祭拜大侠墓，缅怀先人。'
       },
       {
         id: 'c2',
         text: '直接找村长辞行',
         nextEventId: 'village_chief',
+        effects: { timePass: 0 },
         log: '你归心似箭，直接去找村长辞行。'
       }
     ]
@@ -31,7 +33,7 @@ export const events: Record<string, GameEvent> = {
         id: 'c1',
         text: '恭敬磕头',
         nextEventId: 'village_chief',
-        effects: { stats: { luck: 5 } }, // 增加机缘
+        effects: { stats: { luck: 5 }, timePass: 0 }, // 增加机缘
         log: '你恭敬地磕了三个响头，感觉运气变好了。'
       },
       {
@@ -39,7 +41,7 @@ export const events: Record<string, GameEvent> = {
         text: '感悟剑意',
         nextEventId: 'village_chief',
         requirement: { stats: { intelligence: 15 } }, // 需要悟性
-        effects: { stats: { strength: 3, energy: 10 } },
+        effects: { stats: { strength: 3, energy: 10 }, timePass: 0 },
         log: '你盯着墓碑上的剑痕，若有所悟。'
       }
     ]
@@ -54,7 +56,7 @@ export const events: Record<string, GameEvent> = {
         id: 'c1',
         text: '谢过村长',
         nextEventId: 'adventure_start',
-        effects: { addItem: '半本秘籍' },
+        effects: { addItem: '半本秘籍', timePass: 0 },
         log: '你收下了村长的礼物，踏上了征程。'
       }
     ]
@@ -69,12 +71,14 @@ export const events: Record<string, GameEvent> = {
              id: 'c1',
              text: '走官道',
              nextEventId: 'capital_city',
+             effects: { timePass: 1 },
              log: '你选择了宽阔的官道，一路平平安安。'
          },
          {
              id: 'c2',
              text: '走小路',
              nextEventId: 'forest_encounter',
+             effects: { timePass: 1 },
              log: '你选择了幽静的小路，希望能有奇遇。'
          }
      ]
@@ -184,8 +188,8 @@ export const events: Record<string, GameEvent> = {
         id: 'drink_tea',
         text: '喝茶听书 (-10金)',
         nextEventId: 'capital_city',
-        effects: { money: -10, stats: { energy: 10, intelligence: 2 }, timePass: 0 },
-        log: '你一边喝茶一边听着江湖八卦，内力有所精进。'
+        effects: { money: -10, stats: { energy: 10, maxEnergy: 5, intelligence: 2 }, timePass: 0 },
+        log: '你一边喝茶一边听着江湖八卦，内力有所精进，内力上限提升了。'
       },
       {
         id: 'inquire',
@@ -341,7 +345,8 @@ export const events: Record<string, GameEvent> = {
         chance: 0.8,
         successEventId: 'battle_win_boar',
         failEventId: 'battle_lose_boar',
-        log: '你拔剑冲向野猪。'
+        effects: { stats: { energy: -15, health: -5 } },
+        log: '你拔剑冲向野猪，消耗了内力和气血。'
       },
       {
         id: 'c2',

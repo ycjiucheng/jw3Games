@@ -28,22 +28,30 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: Install dependencies with rollup workaround
+      - name: Install core dependencies with stable Vite
         run: |
-          # 彻底解决 npm rollup 可选依赖问题
-          # 先安装所有依赖但跳过可选依赖
-          npm install --no-optional --legacy-peer-deps --no-audit --no-fund
+          # 清除可能的缓存问题
+          npm cache clean --force
+          rm -rf node_modules package-lock.json
           
-          # 手动修复：创建一个假的 rollup 平台包来满足依赖
+          # 安装核心依赖，使用经过验证的稳定版本
+          npm install --no-optional --legacy-peer-deps --no-audit --no-fund \
+            react@^18.3.1 \
+            react-dom@^18.3.1 \
+            react-router-dom@^7.3.0 \
+            zustand@^5.0.3 \
+            vite@5.4.10 \
+            @vitejs/plugin-react@4.4.1 \
+            typescript@~5.8.3 \
+            tailwindcss@3.4.17
+          
+          # 手动修复 rollup 平台依赖问题
           mkdir -p node_modules/@rollup
           echo 'module.exports = require("rollup");' > node_modules/@rollup/rollup-linux-x64-gnu.js
           echo 'module.exports = require("rollup");' > node_modules/@rollup/rollup-linux-x64-musl.js
-          echo 'module.exports = require("rollup");' > node_modules/@rollup/rollup-win32-x64-msvc.js
-          echo 'module.exports = require("rollup");' > node_modules/@rollup/rollup-darwin-x64.js
-          echo 'module.exports = require("rollup");' > node_modules/@rollup/rollup-darwin-arm64.js
 
       - name: Build
-        run: npm run build
+        run: npx vite build
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

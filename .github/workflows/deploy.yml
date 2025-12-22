@@ -2,65 +2,40 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: 18
           cache: 'npm'
-
-      - name: Install core dependencies with stable Vite
-        run: |
-          # 清除可能的缓存问题
-          npm cache clean --force
-          rm -rf node_modules package-lock.json
-          
-          # 安装核心依赖，使用经过验证的稳定版本
-          npm install --no-optional --legacy-peer-deps --no-audit --no-fund \
-            react@^18.3.1 \
-            react-dom@^18.3.1 \
-            react-router-dom@^7.3.0 \
-            zustand@^5.0.3 \
-            vite@5.4.10 \
-            @vitejs/plugin-react@4.4.1 \
-            typescript@~5.8.3 \
-            tailwindcss@3.4.17
-          
-          # 手动修复 rollup 平台依赖问题
-          mkdir -p node_modules/@rollup
-          echo 'module.exports = require("rollup");' > node_modules/@rollup/rollup-linux-x64-gnu.js
-          echo 'module.exports = require("rollup");' > node_modules/@rollup/rollup-linux-x64-musl.js
-
+      - name: Install dependencies
+        run: npm ci
       - name: Build
-        run: npx vite build
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
+        run: npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'
+          path: ./dist
 
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

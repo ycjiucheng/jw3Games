@@ -1,0 +1,23 @@
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;padding:0;background:#ffffff;color:#222;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial}
+.ui-top{position:fixed;top:0;left:0;right:0;height:56px;display:flex;align-items:center;gap:12px;padding:8px 12px;background:rgba(255,255,255,.85);backdrop-filter:saturate(1.2) blur(6px);z-index:10;border-bottom:1px solid #e5e7eb}
+.ui-top .stat{display:flex;align-items:center;gap:6px;background:#f4f5f7;border:1px solid #dfe3e8;border-radius:8px;padding:6px 10px}
+.ui-top .stat span{opacity:.8;font-size:12px}
+.ui-top .stat strong{font-size:16px}
+.ui-top button{margin-left:auto;background:#2b7dfc;border:none;color:#fff;border-radius:8px;padding:8px 12px;font-weight:600}
+.canvas-wrap{position:absolute;top:56px;bottom:80px;left:0;right:0}
+#game{width:100%;height:100%}
+.ui-bottom{position:fixed;left:0;right:0;bottom:0;height:80px;background:rgba(255,255,255,.9);display:flex;align-items:center;gap:12px;padding:10px 12px;border-top:1px solid #e5e7eb}
+.ui-bottom #recruit{background:#31c48d;color:#0b1418;border:none;border-radius:8px;padding:10px 14px;font-weight:700}
+.pool{display:flex;align-items:center;gap:8px;flex:1;overflow-x:auto}
+.card{position:relative;min-width:64px;height:64px;border-radius:10px;border:1px solid #dfe3e8;background:#f7f9fc;display:flex;align-items:center;justify-content:center;color:#333;font-weight:700;overflow:hidden}
+.card img{width:100%;height:100%;object-fit:contain;padding:6px;opacity:.95}
+.card .lvl{position:absolute;right:4px;bottom:4px;background:#2b7dfc;color:#fff;border-radius:6px;padding:2px 6px;font-size:12px}
+.enemy{position:absolute}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(3px);z-index:20}
+.overlay[hidden]{display:none !important}
+.overlay .panel{background:#151821;border:1px solid #2a2f38;border-radius:12px;padding:20px 24px;color:#e8e8ea;min-width:280px;text-align:center}
+.overlay .panel h1{margin:0 0 8px;font-size:20px}
+.overlay .panel p{margin:0 0 16px;opacity:.85}
+.overlay .panel button{background:#2b7dfc;color:#fff;border:none;border-radius:8px;padding:10px 14px;font-weight:700}
+.sell{min-width:96px;height:64px;border-radius:10px;border:1px dashed #db2f2f;background:#fff1f1;color:#b00020;display:flex;align-items:center;justify-content:center;font-weight:800}

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>会战弓月城 · 塔防原型</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="ui-top">
+    <div class="stat"><span>金币</span><strong id="gold">0</strong></div>
+    <div class="stat"><span>波次</span><strong id="wave">1</strong></div>
+    <div class="stat"><span>圣女生命</span><strong id="life">100</strong></div>
+    <button id="pause">暂停</button>
+  </div>
+  <div class="canvas-wrap">
+    <canvas id="game"></canvas>
+  </div>
+  <div class="ui-bottom">
+    <button id="recruit">随机招募(20)</button>
+    <div class="pool" id="pool"></div>
+    <div class="sell" id="sell">售卖区</div>
+  </div>
+  <div class="overlay" id="overlay" hidden>
+    <div class="panel">
+      <h1 id="overlay-title">游戏结束</h1>
+      <p id="overlay-desc">圣女已受重创，防线被突破</p>
+      <button id="restart">重新开始</button>
+    </div>
+  </div>
+  <script src="./main.js"></script>
+</body>
+</html>
